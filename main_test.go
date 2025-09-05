@@ -5,24 +5,26 @@ import (
 	"testing"
 )
 
+// TestFindAnagrams - функция для тестирования findAnagrams.
 func TestFindAnagrams(t *testing.T) {
+	// testCases содержит набор тестовых сценариев.
 	testCases := []struct {
-		name     string
-		input    []string
-		expected map[string][]string
+		name     string              // Имя теста для удобства идентификации.
+		input    []string            // Входные данные: срез слов.
+		expected map[string][]string // Ожидаемый результат: карта анаграмм.
 	}{
 		{
-			name:     "Empty input",
+			name:     "Пустой ввод",
 			input:    []string{},
 			expected: map[string][]string{},
 		},
 		{
-			name:     "No anagrams",
+			name:     "Нет анаграмм",
 			input:    []string{"стол", "стул", "дом"},
 			expected: map[string][]string{},
 		},
 		{
-			name:  "Basic anagrams",
+			name:  "Базовый случай с анаграммами",
 			input: []string{"пятак", "пятка", "тяпка", "листок", "слиток", "столик", "стол"},
 			expected: map[string][]string{
 				"листок": {"листок", "слиток", "столик"},
@@ -30,14 +32,14 @@ func TestFindAnagrams(t *testing.T) {
 			},
 		},
 		{
-			name:  "Mixed case",
+			name:  "Разный регистр букв",
 			input: []string{"Пятак", "пятка", "Тяпка"},
 			expected: map[string][]string{
 				"пятак": {"пятак", "пятка", "тяпка"},
 			},
 		},
 		{
-			name:  "Multiple anagram groups",
+			name:  "Несколько групп анаграмм",
 			input: []string{"апельсин", "спаниель", "актёр", "катер", "клоун", "кулон", "уклон"},
 			expected: map[string][]string{
 				"апельсин": {"апельсин", "спаниель"},
@@ -47,11 +49,15 @@ func TestFindAnagrams(t *testing.T) {
 		},
 	}
 
+	// Проходим по всем тестовым сценариям.
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			// Вызываем тестируемую функцию.
 			result := findAnagrams(tc.input)
+			// Сравниваем полученный результат с ожидаемым.
+			// reflect.DeepEqual используется для глубокого сравнения карт.
 			if !reflect.DeepEqual(result, tc.expected) {
-				t.Errorf("findAnagrams() = %v, want %v", result, tc.expected)
+				t.Errorf("findAnagrams() = %v, ожидалось %v", result, tc.expected)
 			}
 		})
 	}
