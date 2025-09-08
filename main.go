@@ -9,21 +9,8 @@ import (
 )
 
 func main() {
-	// Открываем файл со словарем. Имя файла "dictionary" жестко задано.
-	wordsFile, err := os.Open("dictionary.txt")
-	if err != nil {
-		log.Printf("Ошибка при открытии файла: %v\n", err)
-		return
-	}
-	// Гарантируем закрытие файла при выходе из функции.
-	defer func() {
-		if err = wordsFile.Close(); err != nil {
-			log.Printf("Ошибка при закрытии файла: %v\n", err)
-		}
-	}()
-
-	// Создаем сканер для чтения файла построчно.
-	scanner := bufio.NewScanner(wordsFile)
+	// Создаем сканер для чтения построчно.
+	scanner := bufio.NewScanner(os.Stdin)
 
 	// Считываем все слова из файла в срез (slice).
 	var words []string
